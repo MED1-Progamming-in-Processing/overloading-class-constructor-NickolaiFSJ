@@ -1,41 +1,58 @@
 class Circle {
+  boolean Round = true;
+  float xBoundary = width;
+  float yBoundary = height;
   float x;
   float y;
   float xSpeed;
   float ySpeed;
-  int radius;
-  color circleColor;
+  float diameter;
+  float randoColRed;
+  float randoColGreen;
+  float randoColBlue;
+  float colorShift = 255;
   
-//  circle = new Circle(random(width), random(height), random(-3, 3), random(-3, 3), 50);
-  Circle(float x, float y, float xSpeed, float ySpeed, int radiusCircle, color circleColor) {
+  Circle(float x, float y, float xSpeed, float ySpeed, float diameter) {
     this.x = x;
     this.y = y;
     this.xSpeed = xSpeed;
     this.ySpeed = ySpeed;
-    radius = radiusCircle;
+    this.diameter = diameter;
   }
-  
-    Circle(float x, float y, float xSpeed, float ySpeed,  color circleColor) {
-    this.x = x;
-    this.y = y;
-    this.xSpeed = xSpeed;
-    this.ySpeed = ySpeed;
-    this.radius = 20;
-  }
+
   void move() {
     x += xSpeed;
-    if (x < 0 || x > width) {
+    if (x < 0+diameter/2 || x > xBoundary-diameter/2) {
       xSpeed *= -1;
+      randoColRed = random(colorShift);
+      randoColGreen = random(colorShift);
+      randoColBlue = random(colorShift);
     }
 
     y += ySpeed;
-    if (y < 0 || y > height) {
+    if (y < 0+diameter/2 || y > yBoundary-diameter/2) {
       ySpeed *= -1;
+      randoColRed = random(colorShift);
+      randoColGreen = random(colorShift);
+      randoColBlue = random(colorShift);
     }
   }
   
   void display(){
-   fill(circleColor);
-   ellipse(x, y, radius, radius); 
+   if(Round == true){
+     background(randoColRed-20, randoColGreen-20, randoColBlue-20);
+     fill(randoColRed, randoColGreen, randoColBlue);
+     ellipse(x, y, diameter, diameter);
+   } else if (Round == false){
+     background(randoColRed-20, randoColGreen-20, randoColBlue-20);
+     fill(randoColRed, randoColGreen, randoColBlue);
+     rectMode(CENTER);
+     rect(x, y, diameter, diameter);
+   } 
+ }
+  void switcheroo(){
+      if((mouseX > 0 && mouseX < width) && (mouseY > 0 && mouseY < height)){
+      Round =! Round;
+    }
   }
 }
